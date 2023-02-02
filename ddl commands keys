@@ -1,0 +1,96 @@
+Enter password: *****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 5.5.62 MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use sse;
+Database changed
+mysql> show tables;
++---------------+
+| Tables_in_sse |
++---------------+
+| employee      |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> desc employee;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| surname | varchar(10) | YES  |     | NULL    |       |
+| age     | int(20)     | YES  |     | NULL    |       |
+| salary  | int(10)     | YES  |     | NULL    |       |
+| da      | int(20)     | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> create table student(studentname varchar(10),age int(20),year int(10),address int(20),number int(10))
+    ->
+    -> ;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> desc student;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| studentname | varchar(10) | YES  |     | NULL    |       |
+| age         | int(20)     | YES  |     | NULL    |       |
+| year        | int(10)     | YES  |     | NULL    |       |
+| address     | int(20)     | YES  |     | NULL    |       |
+| number      | int(10)     | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql> alter table student add primary key(regno);
+ERROR 1072 (42000): Key column 'regno' doesn't exist in table
+mysql> alter table student add primary key(age);
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc student;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| studentname | varchar(10) | YES  |     | NULL    |       |
+| age         | int(20)     | NO   | PRI | 0       |       |
+| year        | int(10)     | YES  |     | NULL    |       |
+| address     | int(20)     | YES  |     | NULL    |       |
+| number      | int(10)     | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql> alter table student add foreign key(age) references student(age);
+ERROR 1025 (HY000): Error on rename of '.\sse\#sql-2a40_8' to '.\sse\student' (errno: 150)
+mysql> alter table student add foreign key(age) references employee(age);
+ERROR 1005 (HY000): Can't create table 'sse.#sql-2a40_8' (errno: 150)
+mysql> alter table student add unique(rollno);
+ERROR 1072 (42000): Key column 'rollno' doesn't exist in table
+mysql> alter table student add unique(age);
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc student;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| studentname | varchar(10) | YES  |     | NULL    |       |
+| age         | int(20)     | NO   | PRI | 0       |       |
+| year        | int(10)     | YES  |     | NULL    |       |
+| address     | int(20)     | YES  |     | NULL    |       |
+| number      | int(10)     | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+5 rows in set (0.02 sec)
+
+mysql> alter table student add check(age>=15);
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql>
