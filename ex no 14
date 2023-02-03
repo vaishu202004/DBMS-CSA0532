@@ -1,0 +1,83 @@
+mysql> use sse;
+Database changed
+mysql> show tables;
++---------------+
+| Tables_in_sse |
++---------------+
+| dbms          |
+| employee      |
+| parent        |
+| parentdetails |
+| student       |
++---------------+
+5 rows in set (0.00 sec)
+
+mysql> decs parentdetails;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'decs parentdetails' at line 1
+mysql> desc parentdetails;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| name       | varchar(20) | YES  |     | NULL    |       |
+| age        | int(10)     | YES  |     | NULL    |       |
+| occupation | varchar(20) | YES  |     | NULL    |       |
+| state      | varchar(10) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> desc student;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| studentname | varchar(10) | YES  |     | NULL    |       |
+| age         | int(20)     | NO   | PRI | 0       |       |
+| year        | int(10)     | YES  |     | NULL    |       |
+| address     | int(20)     | YES  |     | NULL    |       |
+| number      | int(10)     | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql> create student revi;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'student revi' at line 1
+mysql> create user revi;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> grant all on student to revi;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> show grants for revi;
++-------------------------------------------------------+
+| Grants for revi@%                                     |
++-------------------------------------------------------+
+| GRANT USAGE ON *.* TO 'revi'@'%'                      |
+| GRANT ALL PRIVILEGES ON `sse`.`student` TO 'revi'@'%' |
++-------------------------------------------------------+
+2 rows in set (0.00 sec)
+
+mysql> show grants for revi;
++-------------------------------------------------------+
+| Grants for revi@%                                     |
++-------------------------------------------------------+
+| GRANT USAGE ON *.* TO 'revi'@'%'                      |
+| GRANT ALL PRIVILEGES ON `sse`.`student` TO 'revi'@'%' |
++-------------------------------------------------------+
+2 rows in set (0.00 sec)
+
+mysql> grant select for revi;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'for revi' at line 1
+mysql> grant select,update on persons to revi;
+ERROR 1146 (42S02): Table 'sse.persons' doesn't exist
+mysql> grant select,update on employee to revi;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> show grants for revi;
++--------------------------------------------------------+
+| Grants for revi@%                                      |
++--------------------------------------------------------+
+| GRANT USAGE ON *.* TO 'revi'@'%'                       |
+| GRANT SELECT, UPDATE ON `sse`.`employee` TO 'revi'@'%' |
+| GRANT ALL PRIVILEGES ON `sse`.`student` TO 'revi'@'%'  |
++--------------------------------------------------------+
+3 rows in set (0.00 sec)
+
+mysql>
