@@ -1,0 +1,82 @@
+Enter password: *****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 28
+Server version: 5.5.62 MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use sse;
+Database changed
+mysql> select*from teachers:
+    -> select*from teachers;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ':
+select*from teachers' at line 1
+mysql> select*from teachers;
++--------+------+----------+---------+
+| name   | age  | salary   | subject |
++--------+------+----------+---------+
+| devi   |   30 |   100000 | maths   |
+| gopi   |   45 | 10000000 | english |
+| gayu   |   50 |    10000 | drawing |
+| sajana |   80 |     5000 | pet     |
++--------+------+----------+---------+
+4 rows in set (0.00 sec)
+
+mysql> DELIMITER //
+mysql> CREATE PROCEDURE teachers_info()
+    -> BEGIN
+    -> select*from teachers;
+    -> END; //
+ERROR 1304 (42000): PROCEDURE teachers_info already exists
+mysql> CALL teachers_info();
+    -> //
++--------+------+----------+---------+
+| name   | age  | salary   | subject |
++--------+------+----------+---------+
+| devi   |   30 |   100000 | maths   |
+| gopi   |   45 | 10000000 | english |
+| gayu   |   50 |    10000 | drawing |
+| sajana |   80 |     5000 | pet     |
++--------+------+----------+---------+
+4 rows in set (0.00 sec)
+
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> CREATE PROCEDURE while_loop()
+    -> BEGIN
+    -> DECLARE num INT default 1;
+    -> DECLARE res varchar
+    -> use sse;
+    -> end//
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'use sse;
+end' at line 5
+mysql> CREATE PROCEDURE while_loop()
+    -> BEGIN
+    -> DECLARE num INT default 1;
+    -> DECLARE res VARCHAR(50) default'';
+    -> WHILE num < 78125 DO
+    -> SET res = CONCAT(res,num,'.');
+    -> SET num = num*5;
+    -> END while;
+    -> SELECT res;
+    -> END //
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> call while_loop()
+    ->  //
++----------------------------+
+| res                        |
++----------------------------+
+| 1.5.25.125.625.3125.15625. |
++----------------------------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+mysql>
